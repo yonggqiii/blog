@@ -28,8 +28,7 @@ menu = [
 ]
 
 socials = [
-    { name = "twitter", url = "https://twitter.com/not_matthias", icon = "twitter" },
-    { name = "github", url = "https://github.com/not-matthias/", icon = "github" },
+    { name = "github", url = "https://github.com/yonggqiii/", icon = "github" },
 ]
 comment = false
 dynamic_note = true
