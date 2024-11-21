@@ -284,7 +284,7 @@ A ground rule $R_1$ is a **ground instance** of another rule $R_2$ if $R_1$ is t
 {% end %}
 
 {% note(header="Example.") %}
-From our example program, `A(1) :- B(3, 3)` is a ground instance of the rule `A(x) :- B(x, _)`.
+From our example program, `A(1) :- B(1, 3)` is a ground instance of the rule `A(x) :- B(x, _)`.
 {% end %}
 
 {% note(header="Definition (Model).") %}
