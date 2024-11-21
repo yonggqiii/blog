@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<html class="dark light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+
+    
+    
+    
+    <title>
+         Motivations Behind Fixed-Point-Oriented Programming
+        
+    </title>
+
+        
+            <meta property="og:title" content="Motivations Behind Fixed-Point-Oriented Programming" />
+        
+     
+
+     
+         
+     
+
+     
+         
+    
+
+    
+    
+
+    
+    
+        <link href=https://yongqi.foo/blog/fonts.css rel="stylesheet" />
+    
+
+    
+    
+
+    
+    
+        <script src=https://yongqi.foo/blog/js/codeblock.js></script>
+    
+
+    
+    
+        <script src=https://yongqi.foo/blog/js/toc.js></script>
+    
+    
+    
+    
+        <script src=https://yongqi.foo/blog/js/note.js></script>
+    
+
+    
+        
+            <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              }
+            };
+            </script>
+        
+        <script type="text/javascript" id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    
+
+    
+    <link rel="alternate" type="application/atom+xml" title="yongqi.foo&#x2F;blog" href="https://yongqi.foo/blog/atom.xml">
+
+
+    
+    
+        <link rel="stylesheet" type="text/css" href=https://yongqi.foo/blog/theme/light.css />
+        <link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://yongqi.foo/blog/theme/dark.css" />
+    
+
+    <!-- Set the correct theme in the script -->
+    <script src=https://yongqi.foo/blog/js/themetoggle.js></script>
+    
+        <script>setTheme(getSavedTheme());</script>
+    
+
+    <link rel="stylesheet" type="text/css" media="screen" href=https://yongqi.foo/blog/main.css />
+
+    
+</head>
+
+
+<body>
+    <div class="content">
+        <header>
+    <div class="main">
+        <a href=https:&#x2F;&#x2F;yongqi.foo&#x2F;blog>yongqi.foo&#x2F;blog</a>
+
+        <div class="socials">
+            
+            <a rel="me" href="https:&#x2F;&#x2F;github.com&#x2F;yonggqiii&#x2F;" class="social">
+                <img alt=github src=https://yongqi.foo/blog/social_icons/github.svg>
+            </a>
+            
+        </div>
+    </div>
+
+    <nav>
+        
+        <a href=https://yongqi.foo/blog/posts style="margin-left: 0.5em">&#x2F;posts</a>
+        
+        <a href=https://yongqi.foo/blog/tags style="margin-left: 0.5em">&#x2F;tags</a>
+        
+        <a href="https://yongqi.foo/" style="margin-left: 0.5em">my page</a>
+
+        
+        |<a id="dark-mode-toggle" onclick="toggleTheme(); event.preventDefault();" href="#">
+            <img src=https://yongqi.foo/blog/feather/sun.svg id="sun-icon" style="filter: invert(1);" alt="Light" />
+            <img src=https://yongqi.foo/blog/feather/moon.svg id="moon-icon" alt="Dark" />
+        </a>
+
+        <!-- Inititialize the theme toggle icons -->
+        <script>updateItemToggleTheme()</script>
+        
+    </nav>
+</header>
+
+
+        
+        
+    
+<main>
+    <article>
+        <div class="title">
+            
+            
+    <div class="page-header">
+        Motivations Behind Fixed-Point-Oriented Programming<span class="primary-color" style="font-size: 1.6em">.</span>
+    </div>
+
+
+                <div class="meta">
+                    
+                        Posted on <time>2024-11-18</time>
+                    
+
+                    
+                        :: Updated on <time>2024-11-18</time>
+                    
+
+                    
+
+                    
+                    
+                            <span class="tags-label"> :: Tags:</span>
+                            <span class="tags">
+                                    <a href="https://yongqi.foo/blog/tags/fixed-point-oriented-programming/" class="post-tag">fixed-point-oriented programming</a>, 
+                                
+                                    <a href="https://yongqi.foo/blog/tags/logic-programming/" class="post-tag">logic programming</a>, 
+                                
+                                    <a href="https://yongqi.foo/blog/tags/datalog/" class="post-tag">datalog</a>, 
+                                
+                                    <a href="https://yongqi.foo/blog/tags/static-analysis/" class="post-tag">static analysis</a>
+                                
+                            </span>
+                    
+
+                    
+                    
+
+                    
+
+                </div>
+        </div>
+
+        
+
+        
+        
+        
+            <div class="toc-container">
+                <h1 class="toc-title">Table of Contents</h1>
+                <ul class="toc-list">
+                    
+                        <li>
+                            <a href="https://yongqi.foo/blog/posts/flix/#introduction">Introduction</a>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="https://yongqi.foo/blog/posts/flix/#motivation">Motivation</a>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="https://yongqi.foo/blog/posts/flix/#lattices-and-kleene-s-fixed-point-theorem">Lattices and Kleene&#x27;s Fixed-Point Theorem</a>
+                            
+                                <ul>
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#partial-orders">Partial Orders</a>
+                                        </li>
+
+                                        
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#lattices">Lattices</a>
+                                        </li>
+
+                                        
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#chains">Chains</a>
+                                        </li>
+
+                                        
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#functions-and-fixed-points">Functions and Fixed Points</a>
+                                        </li>
+
+                                        
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#kleene-s-fixed-point-theorem">Kleene&#x27;s Fixed-Point Theorem</a>
+                                        </li>
+
+                                        
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#connections-to-complete-lattices">Connections to Complete Lattices</a>
+                                        </li>
+
+                                        
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="https://yongqi.foo/blog/posts/flix/#a-brief-introduction-to-datalog">A Brief Introduction to Datalog</a>
+                            
+                                <ul>
+                                    
+                                        <li>
+                                            <a href="https://yongqi.foo/blog/posts/flix/#semantics">Semantics</a>
+                                        </li>
+
+                                        
+                                            <ul>
+                                                
+                                                    <li>
+                                                        <a href="https://yongqi.foo/blog/posts/flix/#model-theoretic-semantics">Model-Theoretic Semantics</a>
+                                                    </li>
+                                                
+                                                    <li>
+                                                        <a href="https://yongqi.foo/blog/posts/flix/#fixed-point-semantics">Fixed-Point Semantics</a>
+                                                    </li>
+                                                
+                                            </ul>
+                                        
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="https://yongqi.foo/blog/posts/flix/#references">References</a>
+                            
+                        </li>
+                    
+                </ul>
+            </div>
+        
+        
+
+        <section class="body">
+            <h1 id="introduction"><a class="zola-anchor" href="#introduction" aria-label="Anchor link for: introduction">Introduction</a></h1>
+<p>In this post I shall summarize the key ideas behind the Flix programming language [<a href="https://yongqi.foo/blog/posts/flix/#flix">Madsen et al; 2016</a>] and how it is differentiated from Datalog. None of what I write here is original work.</p>
+<h1 id="motivation"><a class="zola-anchor" href="#motivation" aria-label="Anchor link for: motivation">Motivation</a></h1>
+<p>The motivation behind the development of Flix is static analysis, which performs an over-approximation of program behaviour. The idea behind most static analyses is that they compute an abstract state that over-approximates all possible states that a program can reach. Typically, the abstract states form a <strong>lattice</strong>, and computing the "best" (least) approximation can be done by starting with the $\bot$ abstract state, and iteratively applying a monotone abstract transfer function on $\bot$ until the <strong>least fixed point</strong> is reached.</p>
+<p>One of the challenges when working with static analyzers is that the computation of fixed points imposes many mutual dependencies, and worklist algorithms that do so are complex. This causes implementations of such algorithms to be</p>
+<ul>
+<li>brittle; changes to the specification or the problem domain requires significant rewrites/restructuring of the implementation</li>
+<li>complex; implementations of worklist algorithms that compute fixed points are difficult to understand and does not concisely convey the "spirit" of the algorithm</li>
+<li>difficult to optimize; due to the above, implementing optimizations to worklist algorithms, both on an engineering level and an algorithm level, is nontrivial</li>
+</ul>
+<p>As such, some analysis designers use Datalog, a logic programming language that supports the concise expression of fixed point problems by merely specifying relations and rules. In addition, Datalog solvers implement optimizations such as index selection, query planning and parallel execution.</p>
+<p>Loosely, Datalog operates on <strong>facts</strong> and <strong>rules</strong>. Facts are essentially predicates that are assumed to be true, for example, "Alice is a parent of Bob". This can be written as <code>parent(alice, bob)</code>. Rules are ways to infer new facts from existing relations. For example, we can write <code>ancestor(X, Z) :- parent(X, Y), ancestor(Y, Z).</code> which says that <code>X</code> is an ancestor of <code>Z</code> if <code>X</code> is the parent of some <code>Y</code> such that <code>Y</code> is an ancestor of <code>Z</code>. After defining facts and rules, users can perform <strong>queries</strong> from the Datalog solver, which uses the facts and rules to infer more facts to answer the query.</p>
+<h1 id="lattices-and-kleene-s-fixed-point-theorem"><a class="zola-anchor" href="#lattices-and-kleene-s-fixed-point-theorem" aria-label="Anchor link for: lattices-and-kleene-s-fixed-point-theorem">Lattices and Kleene's Fixed-Point Theorem</a></h1>
+<p>As a quick aside, before we talk about Datalog and Flix, we shall describe lattices and fixed points, which will give more context behind how Datalog, Flix, and static analyses in general, work.</p>
+<h2 id="partial-orders"><a class="zola-anchor" href="#partial-orders" aria-label="Anchor link for: partial-orders">Partial Orders</a></h2>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Partial Order).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A <strong>partial order</strong> $\sqsubseteq$ on a set $P$ is a reflexive, transitive and antisymmetric relation on $P$:</p>
+<ul>
+<li>Reflexive: $\forall x\in P.~x \sqsubseteq x$</li>
+<li>Transitive: $\forall x, y, z \in P.~x \sqsubseteq y \land y \sqsubseteq z \to x \sqsubseteq z$</li>
+<li>Antisymmetric: $\forall x,y \in P. x \sqsubseteq y \land y \sqsubseteq x \to x = y$</li>
+</ul>
+<p>$(P,\sqsubseteq)$ is a <strong>partially ordered set</strong>.</p>
+
+    </div>
+  
+</div>
+<p>Partially ordered sets can be enriched to form <strong>lattices</strong>. There are many variants of lattices, each with some additional features, but for us we shall use the broad term "lattice" to describe partially ordered sets with all the features that we want.</p>
+<h2 id="lattices"><a class="zola-anchor" href="#lattices" aria-label="Anchor link for: lattices">Lattices</a></h2>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Lattice).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A <strong>lattice</strong> $(L,\sqsubseteq,\sqcup,\sqcap)$ is such that:</p>
+<ul>
+<li>$(L, \sqsubseteq)$ is a partially ordered set</li>
+<li>Every pair of elements $a,b\in L$ has a <strong>least upper bound</strong> $a \sqcup b \in L$, which is an element $x$ such that $a\sqsubseteq x$ and $b \sqsubseteq x$ and $\forall y \in L.~ a\sqsubseteq y \land b\sqsubseteq y \to x \sqsubseteq y$. $\sqcup$ is also known as a <strong>binary join</strong>.</li>
+<li>Every pair of elements $a,b\in L$ has a <strong>greatest lower bound</strong> $a \sqcap b \in L$, which is an element $x$ such that $x\sqsubseteq a$ and $x \sqsubseteq b$ and $\forall y \in L.~ y\sqsubseteq a \land y\sqsubseteq b \to y \sqsubseteq x$. $\sqcap$ is also known as a <strong>binary meet</strong>.</li>
+</ul>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Complete Lattice).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A <strong>complete lattice</strong> $(L,\sqsubseteq,\sqcup,\sqcap,\top,\bot)$ is a lattice with greatest and least elements $\top$ and $\bot$ such that every subset of $L$ has an <strong>infimum</strong> (meet of all elements in subset) and a <strong>supremum</strong> (join of all elements in subset):</p>
+<ul>
+<li>For every subset $Y \subseteq L$, $\inf Y$ is an element $x$ in $L$ such that $\forall y \in Y.~x\sqsubseteq y$ and $\forall z\in L.\ (\forall y\in Y.\ z \sqsubseteq y)\to z \sqsubseteq x$.</li>
+<li>For every subset $Y \subseteq L$, $\sup Y$ is an element $x$ in $L$ such that $\forall y \in Y.~y\sqsubseteq x$ and $\forall z\in L.\ (\forall y\in Y.\ y \sqsubseteq z)\to x \sqsubseteq z$.</li>
+<li>$\top = \sup L = \inf \emptyset$</li>
+<li>$\bot = \inf L = \sup\emptyset$</li>
+</ul>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Example.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>The powerset of any set, when ordered by inclusion, is a complete lattice. In other words, given any set $S$, $(\mathcal{P}(S), \subseteq, \cup,\cap,S,\emptyset)$ is a complete lattice. Every subset $Y$ of $\mathcal{P}(S)$ has an infimum given by $\inf Y = \bigcap Y$ and supremum given by $\sup Y = \bigcup Y$.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Example.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>Any nonempty finite lattice is complete. The infimum of any subset $Y = \{s_1,\dots,s_n\}$ of the lattice is $s_1\sqcap s_2\sqcap\dots\sqcap s_n$. Argue dually for the supremum.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Nonexample.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>$(\mathbb{R}, \leq, \max,\min)$ is not a complete lattice. Although $\max$ and $\min$ are binary joins, the maximum and minimum elements do not always exist in a subset of $\mathbb{R}$ (they do not even exist in $\mathbb{R}$).</p>
+
+    </div>
+  
+</div>
+<p>In static analysis, lattice elements are usually the possible properties of some point of a program. For example, in data-flow analysis, we attempt to determine the possible values of a variable at a certain program point. Take the following example C program:</p>
+<pre data-lang="c" style="background-color:#fafafa;color:#61676c;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#fa6e32;">#include </span><span style="color:#86b300;">&lt;stdio.h&gt;
+</span><span style="color:#fa6e32;">void </span><span style="color:#f29718;">main</span><span>() {
+</span><span>    </span><span style="color:#fa6e32;">int</span><span> x </span><span style="color:#ed9366;">= </span><span style="color:#ff8f40;">0</span><span style="color:#61676ccc;">;
+</span><span>    </span><span style="color:#fa6e32;">if </span><span>(</span><span style="color:#f29718;">f</span><span>()) {
+</span><span>        x </span><span style="color:#ed9366;">= </span><span style="color:#ff8f40;">1</span><span style="color:#61676ccc;">;
+</span><span>    } </span><span style="color:#fa6e32;">else </span><span>{
+</span><span>        x </span><span style="color:#ed9366;">= </span><span style="color:#ff8f40;">2</span><span style="color:#61676ccc;">;
+</span><span>    }
+</span><span>    </span><span style="color:#f07171;">printf</span><span>(</span><span style="color:#86b300;">&quot;</span><span style="color:#ff8f40;">%d</span><span style="color:#4cbf99;">\n</span><span style="color:#86b300;">&quot;</span><span style="color:#61676ccc;">,</span><span> x)</span><span style="color:#61676ccc;">;
+</span><span>}
+</span></code></pre>
+<p>Then, the set of all possible values <code>x</code> can have is $\{0, 1, 2\}$ since these are the only constants in the program. To best approximate the possible values of <code>x</code> at each program point, we will assign to each program point a subset of $\{0, 1, 2\}$ which denotes the best approximation of the possible values that <code>x</code> can have at that point. To start off, <code>x</code> is given an initial set of possible values $\emptyset$ at every program point. Next, in the first assignment statement, <code>x</code> is assigned <code>0</code>, so at that program point, the possible values <code>x</code> can have now becomes $\{0\} \cup \emptyset = \{0\}$. Similarly, in each branch of the <code>if</code> statement, the possible values <code>x</code> can have are $\{1\}$ and $\{2\}$ respectively. Finally, at the <code>printf</code> statement, <code>x</code> could have inherited the possible values from either branch, in which case we take the union of the possible values from both branches, concluding that at that program point, the possible values of <code>x</code> is $\{1, 2\}$. Recall from above that these subsets of $\{0, 1, 2\}$ are elements of the powerset lattice of $\{0, 1, 2\}$, and taking unions are lattice joins, and the initial possible values is $\emptyset$, which is $\bot$.</p>
+<h2 id="chains"><a class="zola-anchor" href="#chains" aria-label="Anchor link for: chains">Chains</a></h2>
+<p>Before we talk about being able to determine the "best approximation" of program properties, we shall first describe some properties of lattices that allow us to compute this best approximation.</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Chain).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A subset $Y\subseteq L$ of a partially ordered set $(L, \sqsubseteq)$ is a <strong>chain</strong> if it is totally ordered by $\sqsubseteq$, i.e. it is such that</p>
+<p>$$
+\forall y_1,y_2 \in Y.\ y_1 \sqsubseteq y_2 \lor y_2 \sqsubseteq y_1
+$$</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Ascending and Descending Chains).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A sequence of elements $l_1,l_2,\dots$ is an <strong>ascending chain</strong> if</p>
+<p>$$
+\forall n,m \in \mathbb{N}.\ n \leq m \to l_n \sqsubseteq l_m
+$$</p>
+<p>Similarly, a sequence of elements $l_1,l_2,\dots$ is a <strong>descending chain</strong> if</p>
+<p>$$
+\forall n,m \in \mathbb{N}.\ n \leq m \to l_m \sqsubseteq l_n
+$$</p>
+
+    </div>
+  
+</div>
+<p>From the definitions above, it is clear that both ascending and descending chains are also chains (to see this, put every element in the ascending/descending chain in a set; clearly, $\sqsubseteq$ is now a total order on that set).</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Eventually Stabilize).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A sequence of elements $l_1,l_2,\dots$ <strong>eventually stabilizes</strong> if and only if:</p>
+<p>$$
+\exists c \in \mathbb{N}.\ \forall n \in \mathbb{N}.\ n \geq c \to l_n = l_c
+$$</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Chain Conditions).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A partially ordered set $(L, \sqsubseteq)$ has <strong>finite height</strong> if and only if all chains are finite.</p>
+<p>A partially ordered set $(L,\sqsubseteq)$ satisfies the <strong>ascending chain condition</strong> if and only if all ascending chains eventually stabilize. Similarly, it satisfies the <strong>descending chain condition</strong> if and only if all descending chains eventually stabilize.</p>
+
+    </div>
+  
+</div>
+<p>(Complete) lattices that meet the ascending/descending chain condition(s) or have finite height are particularly interesting for us because it gives us a procedure for computing the "best" approximations of program properties in static analyses, and in fact, in many other domains such as graph theory and parsing.</p>
+<h2 id="functions-and-fixed-points"><a class="zola-anchor" href="#functions-and-fixed-points" aria-label="Anchor link for: functions-and-fixed-points">Functions and Fixed Points</a></h2>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Fixed Point).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>$x \in A$ is a <strong>fixed point</strong> of a function $f: A \to A$ if $x = f(x)$.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Monotone).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>Suppose $(L, \sqsubseteq_L)$ and $(M, \sqsubseteq_M)$ are partially ordered sets. A function $f: L \to M$ is <strong>monotone</strong> if</p>
+<p>$$
+\forall x,y\in L.\ x \sqsubseteq_L y \to f(x) \sqsubseteq_M f(y)
+$$</p>
+<p>In other words, $f$ is monotone if it is order preserving.</p>
+
+    </div>
+  
+</div>
+<p>Typically, the way static analyses improve the approximation of program properties is with monotone transfer functions, that give more information about the properties of a program point incrementally and monotonically. In a sense, it does not "subtract" old information, and only adds new information to it.</p>
+<h2 id="kleene-s-fixed-point-theorem"><a class="zola-anchor" href="#kleene-s-fixed-point-theorem" aria-label="Anchor link for: kleene-s-fixed-point-theorem">Kleene's Fixed-Point Theorem</a></h2>
+<p>We now finally describe Kleene's Fixed-Point Theorem, which shows that given certain conditions, we can compute the best approximation of a program property iteratively using a monotone function.</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Kleene's Fixed-Point Theorem.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>Suppose we have a partially ordered set $(L,\sqsubseteq)$ with a least element $\bot$ that meets the ascending chain condition. Then, given any monotone function $f: L \to L$, the <strong>least fixed point</strong> of $f$ (denoted $lfp(f)$) exists and is obtained by</p>
+<p>$$
+lfp(f) = f^n(\bot)
+$$</p>
+<p>for some $n \in \mathbb{N}$ and such that $f^n(\bot) = f^{n + 1}(\bot)$.</p>
+
+    </div>
+  
+</div>
+<p><strong>Proof</strong>. First we show that $f^n(\bot)$ is indeed a fixed point of $f$. By definition, $\bot \sqsubseteq f(\bot)$. Because $f$ is monotone, $f(\bot) \sqsubseteq f(f(\bot))$, i.e. $\bot \sqsubseteq f(\bot) \sqsubseteq f(f(\bot))$. We can thus show with induction that the sequence $\bot, f(\bot), f(f(\bot)),\dots$ is an ascending chain. Because $(L,\sqsubseteq)$ meets the ascending chain condition, this ascending chain eventually stabilizes, hence there will be some $n$ such that $f^n(\bot) = f^{m}(\bot)$ for all $m \geq n$. As such, since $f^n(\bot) = f(f^n(\bot))$, $f^n(\bot)$ is a fixed point.</p>
+<p>Now we show that $f^n(\bot)$ is the <strong>least</strong> fixed point, i.e. if $x$ is another fixed point of $f$ then $f^n(\bot) \sqsubseteq x$. Firstly, $\bot \sqsubseteq x$ by definition. Next, because $f$ is monotone and $x$ is a fixed point, we also know that for all $i \in \mathbb{N}$, $f^i(\bot) \sqsubseteq x \to f^{i + 1}(\bot) \sqsubseteq f(x) = x$. Therefore, by induction, $f^n(\bot) \sqsubseteq x$ for all $n$, which means that $f^n(\bot)$ is indeed the least fixed point of $f$.</p>
+<hr />
+<p>Kleene's Fixed-Point Theorem thus shows us that as long as we have a partially ordered set whose elements describe program properties, that meets the ascending chain condition, and has a bottom element, and a monotone function $f$ that improves our approximations of program properties, to get the best approximation, we start from $\bot$ and repeatedly apply $f$ until a fixed point arises.</p>
+<p>In fact, dually, the greatest fixed point of a monotone function can also be obtained from a partially ordered set that meets the descending chain condition and has a greatest element $\top$.</p>
+<h2 id="connections-to-complete-lattices"><a class="zola-anchor" href="#connections-to-complete-lattices" aria-label="Anchor link for: connections-to-complete-lattices">Connections to Complete Lattices</a></h2>
+<p>The following theorem shows the connections between partially ordered sets that have least fixed points and complete lattices.</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Theorem.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A partially ordered set $(L,\sqsubseteq)$ is a complete lattice that meets the ascending chain condition if and only if it has a least element $\bot$ and binary joins $\sqcup$ and meets the ascending chain condition.</p>
+
+    </div>
+  
+</div>
+<p><strong>Proof</strong>. The forward implication is shown by definition so we prove the converse. To do so, we shall prove the following lemma to simplify our main proof.</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Lemma.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>Every subset $Y$ of a partially ordered set $(L, \sqsubseteq)$ has a supremum if and only if $(L,\sqsubseteq)$ is a complete lattice.</p>
+
+    </div>
+  
+</div>
+<p><strong>Proof</strong>. The backward implication is shown by definition so we prove the forward implication only. Let $Y \subseteq L$. We then have an element $x$ in $L$ that is the supremum of all elements of $L$ less than all elements in $Y$:</p>
+<p>$$
+x = \sup \{l \in L\ |\ \forall l' \in Y.\ l \sqsubseteq l'\}
+$$</p>
+<p>$x$ is in fact the infimum of $Y$ since the set $\{l \in L\ |\ \forall l' \in Y.\ l \sqsubseteq l'\}$ is the set of all elements in $L$ that are less than (or equal to) all the elements of $Y$ (these are all lower bounds) and its supremum is necessarily the greatest among them.</p>
+<p>As such, since every subset of $L$ has infima and suprema, $L$ itself has an infimum $\bot$ and a supremum $\top$ and is thus a complete lattice.</p>
+<hr />
+<p>Returning to our main proof obligation, using our freshly proven lemma it suffices to show that all subsets $Y$ of $L$ have a supremum. If $Y$ is empty, then clearly $\sup Y = \bot$ so this case is proven.</p>
+<p>Now suppose $Y$ is nonempty and finite, i.e. $Y = \{y_1, \dots, y_n\}$ for $n \geq 1$. $\sup Y$ is clearly $y_1\sqcup y_2\sqcup\dots\sqcup y_n$.</p>
+<p>The last case is more tricky. Suppose $Y$ is infinite. We shall construct the following sequence $l_0, l_1,\dots$ inductively:</p>
+<ul>
+<li>Let $l_0$ be an arbitrary element $y_0$.</li>
+<li>Given $l_n$ let $l_{n + 1}$ be
+<ul>
+<li>$l_n$ if $\forall y \in Y.\ y \sqsubseteq l_n$</li>
+<li>$l_n \sqcup y_{n + 1}$ for some $y_{n + 1} \in Y$ such that $y_{n + 1} \not\sqsubseteq l_n$.</li>
+</ul>
+</li>
+</ul>
+<p>Essentially, the sequence starts with $y_0$, and each successive element is obtained by joining it with an element of $Y$ that is not less than the latest element of the sequence, and does so until the sequence arrives at an element of $L$ that is greater than every element of $Y$, and remains that way indefinitely.</p>
+<p>Notice that the sequence $l_0, l_1, \dots$ is an ascending chain. Furthermore, because $(L, \sqsubseteq)$ meets the ascending chain condition, this ascending chain eventually stabilizes, so there is some $n$ such that $l_n = l_{n + 1} = l_{n + 2} = \dots$. However, the chain itself is not particularly important. The key part of the construction of this chain is that it eventually stabilizes, and based on its construction, it means that eventually after a finite number of elements, we get to a point such that there is some $l_n$ where subsequent elements are the same, and that means that this $l_n$ satisfies the property of being greater than all elements in $Y$—making this an upper bound of $Y$ (otherwise, it means that there is some $y$ such that $y \not\sqsubseteq l_n$, and therefore $y \sqcup l_n \neq l_n$, which would be a contradiction<sup class="footnote-reference"><a href="#1">1</a></sup>).</p>
+<p>$l_n$ is in fact the <strong>least</strong> upper bound i.e. supremum of $Y$, by virtue of the fact that $l_n$ is the least upper bound of the subset of $Y$ $\{y_0, y_1,\dots,y_n\}$ because it is constructed by $y_0 \sqcup y_1\sqcup \dots\sqcup y_n$. Thus, since $l_n$ is an upper bound of $Y$, and is the least upper bound of $\{y_0,y_1,\dots,y_n\}$, it is also the least upper bound of $Y$.</p>
+<hr />
+<p>Therefore, requiring a partially ordered set be a complete lattice that satisfies the ascending chain condition is no stricter, and is in fact equivalent, as requiring it to have $\bot$, joins and meet the ascending chain condition.</p>
+<h1 id="a-brief-introduction-to-datalog"><a class="zola-anchor" href="#a-brief-introduction-to-datalog" aria-label="Anchor link for: a-brief-introduction-to-datalog">A Brief Introduction to Datalog</a></h1>
+<p>As stated in the <a href="https://yongqi.foo/blog/posts/flix/#introduction">introduction</a>, Datalog programs consists of facts and rules. Facts are essentially rules with no premise.</p>
+<p>We show the syntax of a datalog program here.</p>
+<pre style="background-color:#fafafa;color:#61676c;"><code><span>P ::= R1, ..., Rn           program
+</span><span>R ::= A0 :- A1, ..., An     rule
+</span><span>A ::= p(t1, ..., tn)        atom
+</span><span>t ::= x | v                 term
+</span><span>p   = an element of a finite set of predicate symbols
+</span><span>x   = an element of a finite set of variables
+</span><span>v   = an element of a finite set of values
+</span></code></pre>
+<p>Every Datalog program satisfies <strong>range restriction</strong>, i.e. in the production <code>R</code> above, every variable appearing in the head of the rule (<code>A0</code>) must also appear in the body <code>A1, ..., An</code>. The following is an example Datalog program:</p>
+<pre data-lang="datalog" style="background-color:#fafafa;color:#61676c;" class="language-datalog "><code class="language-datalog" data-lang="datalog"><span>A(1)
+</span><span>B(2, 3)
+</span><span>A(x) :- B(x, _)
+</span></code></pre>
+<h2 id="semantics"><a class="zola-anchor" href="#semantics" aria-label="Anchor link for: semantics">Semantics</a></h2>
+<p>There are several ways to describe the semantics of a Datalog program. The most straightforward way to do so is to do so model-theoretically.</p>
+<h3 id="model-theoretic-semantics"><a class="zola-anchor" href="#model-theoretic-semantics" aria-label="Anchor link for: model-theoretic-semantics">Model-Theoretic Semantics</a></h3>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Ground Terms and Atoms).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A <strong>ground term</strong> is a non-variable constant value appearing somewhere in a program.</p>
+<p>A <strong>ground atom</strong> is a predicate symbol whose arguments are ground terms.</p>
+<p>A <strong>ground rule</strong> is a rule where all atoms are ground.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Herbrand Universe and Base of Datalog Program).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>The <strong>Herbrand Universe</strong> $\mathcal{U}$ of a Datalog program $P$ is the set of all ground terms appearing in $P$.</p>
+<p>The <strong>Herbrand Base</strong> $\mathcal{B}$ of a Datalog program $P$ is the set of all ground atoms where the predicate appears in $P$ and whose arguments are drawn from $\mathcal{U}$.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Example.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>Given the Datalog program</p>
+<pre data-lang="datalog" style="background-color:#fafafa;color:#61676c;" class="language-datalog "><code class="language-datalog" data-lang="datalog"><span>A(1)
+</span><span>B(2, 3)
+</span><span>A(x) :- B(x, _)
+</span></code></pre>
+<p>We have $\mathcal{U} = \{1, 2, 3\}$ and $\mathcal{B} = \{A(1), A(2), A(3), B(1, 1), B(1, 2), B(1, 3), B(2, 1), B(2, 2), B(2, 3), B(3, 1), B(3, 2), B(3, 3)\}$</p>
+
+    </div>
+  
+</div>
+<p>As you can see, the Herbrand Base $\mathcal{B}$ describes the set of all <strong>possible</strong><sup class="footnote-reference"><a href="#2">2</a></sup> facts.</p>
+<p>The model-theoretic semantics define the <em>minimal model</em> of a Datalog program to be its meaning.</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Interpretation of Datalog Program).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>An <strong>interpretation</strong> $I$ of a Datalog program $P$ is a subset $I \subseteq \mathcal{B}$.</p>
+<ul>
+<li>A ground atom $A$ is true w.r.t. an interpretation $I$ if $A \in I$.</li>
+<li>A conjunction of atoms $A_1,\dots,A_n$ is true w.r.t. an interpretation if each atom is true in the interpretation.</li>
+<li>A ground rule is true w.r.t. to an interpretation if either the body conjunction is false or the head is true.</li>
+</ul>
+
+    </div>
+  
+</div>
+<p>This allows us to describe the <em>minimal Herbrand model of a Datalog program</em>.</p>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Ground Instance).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A ground rule $R_1$ is a <strong>ground instance</strong> of another rule $R_2$ if $R_1$ is the result of a substitution of constants for all the variables in $R_2$.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Example.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>From our example program, <code>A(1) :- B(1, 3)</code> is a ground instance of the rule <code>A(x) :- B(x, _)</code>.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Definition (Model).</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>A model $M$ of a Datalog program $P$ is an interpretation that makes every ground instance of every rule in $P$ true. A model $M$ of a Datalog program $P$ is a <strong>minimal Herbrand model</strong> if no other models $M'$ of $P$ are such that $M' \subset M$.</p>
+
+    </div>
+  
+</div>
+<div class="note-container">
+  
+    <div class="note-header">
+      
+        <div class="note-icon">
+        <p>Example.</p>
+
+        </div>
+      
+    </div>
+    <div class="note-content">
+      <p>Let us go back to our example program and list out every single ground instance of every rule in the program.</p>
+<pre data-lang="datalog" style="background-color:#fafafa;color:#61676c;" class="language-datalog "><code class="language-datalog" data-lang="datalog"><span>A(1);
+</span><span>B(2, 3);
+</span><span>A(1) :- B(1, 1); A(1) :- B(1, 2); A(1) :- B(1, 3);
+</span><span>A(2) :- B(2, 1); A(2) :- B(2, 2); A(2) :- B(2, 3);
+</span><span>A(3) :- B(3, 1); A(3) :- B(3, 2); A(3) :- B(3, 3);
+</span></code></pre>
+<p>Each of these are ground rules (the first two rules are facts in the Datalog program, which are just rules without a body). The goal is to find an interpretation that makes all these rules true.</p>
+<p>The empty interpretation $\emptyset$ is not a model of $P$. This is because the first two ground rules are not true with respect to $\emptyset$.</p>
+<p>However, the interpretation $\{A(1), B(2, 3)\}$ is not a model of $P$ either. This is because although the first two ground rules are now true, the rules <code>A(2) :- B(2, 3)</code> is false because <code>B(2, 3)</code> is true but <code>A(2)</code> is false. The other rules are true because the body of the rules are false.</p>
+<p>One valid model is $\{A(1), A(2), B(1, 1), B(2, 3)\}$, which makes all the rules true. However, it is not minimal. Instead the model $\{A(1), A(2), B(2, 3)\}$ is the minimal model of the program.</p>
+
+    </div>
+  
+</div>
+<h3 id="fixed-point-semantics"><a class="zola-anchor" href="#fixed-point-semantics" aria-label="Anchor link for: fixed-point-semantics">Fixed-Point Semantics</a></h3>
+<p>TODO.</p>
+<hr />
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>If $x \not\sqsubseteq y$ then $x \sqcup y \neq y$. This is showed immediately by contradiction. Suppose $x \not \sqsubseteq y$ but $x \sqcup y = y$. By definition of $\sqcup$ it means that $x \sqsubseteq (x \sqcup y)$ i.e. $x \sqsubseteq y$, which is a contradiction.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>The Herbrand Base $\mathcal{B}$ does not consist <strong>only</strong> of "true facts", i.e. there could be "facts" that should not be derived from the rules and facts existing in the program. $\mathcal{B}$ simply consists of all ground atoms that <strong>could</strong> possibly be derived from the program.</p>
+</div>
+<h1 id="references"><a class="zola-anchor" href="#references" aria-label="Anchor link for: references">References</a></h1>
+<a id="flix" style="font-size: 0.8em">
+<strong>Magnus Madsen, Ming-Ho Yee, and Ondřej Lhoták. 2016</strong>. From Datalog to Flix: A Declarative Language for Fixed Points on Lattices. In <i>Proceedings of the 37th ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI '16)</i>. Association for Computing Machinery, New York, NY, USA, 194–208. https://doi.org/10.1145/2908080.2908096
+</a>
+
+        </section>
+    </article>
+</main>
+
+
+
+        
+
+    </div>
+</body>
+
+</html>
