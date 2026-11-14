@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · Yong Qi</title>
+  <meta name="description" content="{{ description or 'Yong Qi\'s blog.' }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | url }}?v=9">
+  {% if math %}<script>MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>{% endif %}
+</head>
+<body><div class="site">
+  <header class="header"><a class="brand" href="{{ '/' | url }}"><span class="brand-mark">yq<span>.</span></span><span>Yong Qi <small> / notes</small></span></a><nav aria-label="Main navigation"><a href="{{ '/posts/' | url }}">Writing</a><a href="{{ '/tags/' | url }}">Topics</a><a href="https://github.com/yonggqiii/">GitHub ↗</a></nav></header>
+  {{ content | safe }}
+  <footer><span>Yong Qi <span class="accent">✳</span> An absolutely useless blog.</span><a href="https://yongqi.foo/">Back to my page ↗</a></footer>
+<script src="{{ "/assets/motion.js" | url }}?v=5" defer></script>
+</div></body></html>

@@ -1,0 +1,17 @@
+---
+layout: base.njk
+title: Home
+---
+<main>
+  <section class="hero">
+    <div class="hero-copy" data-reveal>
+      <div class="eyebrow"><span class="status-dot"></span> MY ABSOLUTELY USELESS BLOG</div>
+      <h1>Yapping in <em>public<span class="accent">.</span></em></h1>
+      <p>Random yaps. Written from time to time, when I have some nonsense to say.</p>
+      <a class="hero-link" href="#posts">Come see what’s new <span>↘</span></a>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="art-disc"><span class="art-spark">✳</span><span class="art-word">cow says<br><em>moo</em></span></div><div class="duck-orbit"><div class="duck-upright"><svg class="duck" viewBox="0 0 84 78" xmlns="http://www.w3.org/2000/svg"><g class="duck-foot duck-foot-back"><ellipse cx="32" cy="68" rx="8" ry="6" fill="#f58a20"/></g><g class="duck-foot duck-foot-front"><ellipse cx="53" cy="68" rx="8" ry="6" fill="#f58a20"/></g><ellipse cx="38" cy="47" rx="27" ry="20" fill="#ffdb58"/><circle cx="53" cy="25" r="17" fill="#ffdb58"/><ellipse cx="70" cy="31" rx="13" ry="6" fill="#f58a20"/><circle cx="57" cy="21" r="2.5" fill="#302039"/></svg></div></div><span class="art-sticker">enjoy the<br>orbiting<br>duck↗</span><span class="art-orbit">✦</span></div>
+    <div class="hero-bottom"><span>BY YONG QI</span><span>SCROLL FOR THE YAPS &nbsp; ↓</span></div>
+  </section>
+  <section class="writing" id="posts"><div class="section-heading" data-reveal><div><span class="eyebrow">THE LATEST & GREATEST</span><h2>Posts<span class="accent">.</span></h2></div><a href="{{ '/posts/' | url }}">All posts ↗</a></div>{% set posts = collections.posts %}{% include 'list.njk' %}</section>
+</main>

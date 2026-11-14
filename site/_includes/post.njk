@@ -1,0 +1,6 @@
+---
+layout: base.njk
+math: true
+---
+{% set article = content | postNavigation %}
+<main class="article-page"><a class="back" href="{{ '/posts/' | url }}">← All writing</a><header class="article-header" data-reveal><div class="eyebrow">{{ date | readableDate }} / YONG QI</div><h1>{{ title }}<span class="accent">.</span></h1><p>{{ description }}</p><div class="tags">{% for topic in topics %}<a href="{{ ('/tags/' + (topic | topicSlug) + '/') | url }}">{{ topic }}</a>{% endfor %}</div></header>{% if article.toc %}<details class="toc-mobile"><summary>On this page</summary>{{ article.toc | safe }}</details>{% endif %}<div class="article-layout"><article class="prose">{{ article.body | safe }}</article>{% if article.toc %}<aside class="toc-desktop"><div class="toc-heading">On this page <span aria-hidden="true">✳</span></div>{{ article.toc | safe }}</aside>{% endif %}</div></main>

@@ -1,0 +1,13 @@
+{
+  "name": "yongqi-blog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\" && eleventy",
+    "dev": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "htmlparser2": "^7.2.0"
+  }
+}

@@ -1,0 +1,11 @@
+---
+layout: base.njk
+pagination:
+  data: collections.topics
+  size: 1
+  alias: topic
+permalink: /tags/{{ topic | topicSlug }}/index.html
+eleventyComputed:
+  title: "{{ topic }}"
+---
+<main class="archive"><a class="back" href="{{ '/tags/' | url }}">← All topics</a><h1>{{ topic }}<span class="accent">.</span></h1>{% set posts = collections.posts | topicPosts(topic) %}{% include 'list.njk' %}</main>

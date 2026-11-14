@@ -1,0 +1,6 @@
+---
+layout: base.njk
+title: Topics
+permalink: /tags/index.html
+---
+<main class="archive"><div class="eyebrow">BROWSE THE NOTEBOOK</div><h1>Topics<span class="accent">.</span></h1><p class="intro">Find writing by subject.</p><div class="topic-list">{% for topic in collections.topics %}<a href="{{ ('/tags/' + (topic | topicSlug) + '/') | url }}">{{ topic }} <span>↗</span></a>{% endfor %}</div></main>
